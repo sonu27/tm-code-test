@@ -52,3 +52,23 @@ func TestAuctionSvc_ErrAuctionAlreadyExists(t *testing.T) {
 		}
 	}
 }
+
+func TestSort(t *testing.T) {
+	a := NewAuctionSvc()
+	a.AddAuction(auction.NewAuction("item3", 1, 4, 1, 1))
+	a.AddAuction(auction.NewAuction("item1", 1, 2, 1, 1))
+	a.AddAuction(auction.NewAuction("item4", 1, 5, 1, 1))
+	a.AddAuction(auction.NewAuction("item5", 1, 6, 1, 1))
+	a.AddAuction(auction.NewAuction("item2", 1, 3, 1, 1))
+
+	front := a.ongoing.Front()
+	Equal(t, "item1", front.Value.(*auction.Auction).Item())
+	front = front.Next()
+	Equal(t, "item2", front.Value.(*auction.Auction).Item())
+	front = front.Next()
+	Equal(t, "item3", front.Value.(*auction.Auction).Item())
+	front = front.Next()
+	Equal(t, "item4", front.Value.(*auction.Auction).Item())
+	front = front.Next()
+	Equal(t, "item5", front.Value.(*auction.Auction).Item())
+}

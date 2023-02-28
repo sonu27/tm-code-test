@@ -22,11 +22,6 @@ This should open a html page with the lines covered by tests and percentages per
 
 ## Future improvements
 
-* Use interfaces
-* Use mocks instead of concrete implementations when testing a separate domain  
+* Use money value objects instead of float64 for amounts/price if calculations are needed in the future
 * Add a logger, so can log errors or results elsewhere if needed
-* Would consider using uint/uint64 for amounts/price for less memory usage, and slightly improved performance
-* UserID could be a struct if more details are needed on each user
-* More testing, especially of bootstrap and moving to its own package
 * Mapping for the fields
-* Stream data in from STDIN

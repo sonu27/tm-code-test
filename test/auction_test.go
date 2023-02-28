@@ -7,24 +7,28 @@ import (
 	. "github.com/stretchr/testify/assert"
 )
 
-func TestBid_happyPath(t *testing.T) {
+func TestAuctionBid_happyPath(t *testing.T) {
 	a := auction.NewAuction("item1", 1, 10, 1, 5)
-	b := auction.NewBid("item1", 2, 2, 5)
+	b := auction.NewBid("item1", 2, 2, 6)
 	if err := a.Bid(b); err != nil {
 		t.Error(err)
 	}
 
-	r := a.Result()
-	Equal(t, 10, r.EndTime)
-	Equal(t, "item1", r.Item)
-	Equal(t, 2, r.UserID)
-	Equal(t, "SOLD", r.Status)
-	Equal(t, 1, r.ValidBidCount)
-	Equal(t, float64(5), r.HighestBid)
-	Equal(t, float64(5), r.LowestBid)
+	want := auction.Result{
+		EndTime:       10,
+		Item:          "item1",
+		UserID:        2,
+		Status:        "SOLD",
+		PricePaid:     5,
+		ValidBidCount: 1,
+		HighestBid:    6,
+		LowestBid:     6,
+	}
+	got := a.Result()
+	Equal(t, want, got)
 }
 
-func TestBid_happyPathComplex(t *testing.T) {
+func TestAuctionBid_happyPathComplex(t *testing.T) {
 	a := auction.NewAuction("item1", 1, 8, 1, 5)
 	b1 := auction.NewBid("item1", 2, 2, 4)
 	_ = a.Bid(b1)
@@ -47,12 +51,16 @@ func TestBid_happyPathComplex(t *testing.T) {
 	b7 := auction.NewBid("item1", 9, 3, 7)
 	_ = a.Bid(b7)
 
-	r := a.Result()
-	Equal(t, 8, r.EndTime)
-	Equal(t, "item1", r.Item)
-	Equal(t, 4, r.UserID)
-	Equal(t, "SOLD", r.Status)
-	Equal(t, 4, r.ValidBidCount)
-	Equal(t, float64(6), r.HighestBid)
-	Equal(t, float64(4), r.LowestBid)
+	want := auction.Result{
+		EndTime:       8,
+		Item:          "item1",
+		UserID:        4,
+		Status:        "SOLD",
+		PricePaid:     6,
+		ValidBidCount: 4,
+		HighestBid:    6,
+		LowestBid:     4,
+	}
+	got := a.Result()
+	Equal(t, want, got)
 }

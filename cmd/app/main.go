@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"tm/internal"
+	"tm/internal/app"
 )
 
 func main() {
@@ -19,7 +19,7 @@ func main() {
 	}
 	defer file.Close()
 
-	output, err := internal.Bootstrap(file)
+	output, err := app.Start(file)
 	if err != nil {
 		log.Fatal(err)
 	}

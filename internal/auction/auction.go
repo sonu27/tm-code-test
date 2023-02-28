@@ -32,7 +32,6 @@ type Auction struct {
 	highestBid       *Bid
 	secondHighestBid *Bid
 	lowestBid        *Bid
-	status           string //or enum
 	users            map[int]Bid
 }
 
@@ -53,7 +52,7 @@ func (a *Auction) Bid(bid *Bid) error {
 		return fmt.Errorf("%w, prev amount: %f, bid amount: %f", ErrBidMustBeHigherThanUsersPrevHighest, v.amount, bid.amount)
 	}
 
-	// set highest bid and move current highest to second highest if needed
+	// set the highest bid and move current highest to second highest if applicable
 	if a.highestBid == nil {
 		a.highestBid = bid
 	} else if bid.amount > a.highestBid.amount {
