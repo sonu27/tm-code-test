@@ -27,7 +27,7 @@ type AuctionSvc struct {
 }
 
 func (a *AuctionSvc) AddAuction(au *auction.Auction) error {
-	if _, exists := a.auctions[au.Item()]; exists {
+	if _, ok := a.auctions[au.Item()]; ok {
 		return ErrAuctionAlreadyExists
 	}
 	a.auctions[au.Item()] = au
@@ -52,14 +52,15 @@ func (a *AuctionSvc) Bid(bid *auction.Bid) error {
 }
 
 func (a *AuctionSvc) MoveCompleted(time int) {
-	front := a.ongoing.Front()
-	for front != nil && front.Value.(*auction.Auction).EndTime() <= time {
+	for front := a.ongoing.Front(); front != nil; front = front.Next() {
+		if front.Value.(*auction.Auction).EndTime() > time {
+			return
+		}
+
 		auc := front.Value.(*auction.Auction)
 		a.completed = append(a.completed, *auc)
 		delete(a.auctions, auc.Item())
 		a.ongoing.Remove(a.ongoing.Front())
-
-		front = a.ongoing.Front()
 	}
 }
 

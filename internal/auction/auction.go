@@ -27,7 +27,6 @@ type Auction struct {
 	endTime          int
 	userID           int
 	price            float64
-	pricePaid        float64
 	validBidCount    int
 	highestBid       *Bid
 	secondHighestBid *Bid
@@ -52,7 +51,7 @@ func (a *Auction) Bid(bid *Bid) error {
 		return fmt.Errorf("%w, prev amount: %f, bid amount: %f", ErrBidMustBeHigherThanUsersPrevHighest, v.amount, bid.amount)
 	}
 
-	// set the highest bid and move current highest to second highest if applicable
+	// set the highest bid and move the current highest to second highest if applicable
 	if a.highestBid == nil {
 		a.highestBid = bid
 	} else if bid.amount > a.highestBid.amount {

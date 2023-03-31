@@ -50,7 +50,7 @@ func TestValidBidCount_amountMustBeMoreThanUsersHighestBid(t *testing.T) {
 }
 
 func TestValidBidCount_bidAtOrBeforeStartIsNotValid(t *testing.T) {
-	a := NewAuction("item1", 2, 10, 1, 5)
+	a := NewAuction("item1", 1, 10, 1, 5)
 	b1 := NewBid("item1", 0, 2, 5)
 	_ = a.Bid(b1)
 	b2 := NewBid("item1", 1, 2, 6)
