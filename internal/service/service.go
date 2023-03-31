@@ -64,9 +64,9 @@ func (a *AuctionSvc) MoveCompleted(time int) {
 }
 
 func (a *AuctionSvc) GetResults() []auction.Result {
-	var results []auction.Result
-	for _, au := range a.completed {
-		results = append(results, au.Result())
+	results := make([]auction.Result, len(a.completed))
+	for i, au := range a.completed {
+		results[i] = au.Result()
 	}
 	return results
 }
