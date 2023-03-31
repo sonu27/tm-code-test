@@ -31,15 +31,15 @@ func (a *AuctionSvc) AddAuction(au *auction.Auction) error {
 		return ErrAuctionAlreadyExists
 	}
 	a.auctions[au.Item()] = au
-	z := a.ongoing.Front()
-	for z != nil {
-		if z.Value.(*auction.Auction).EndTime() > au.EndTime() {
-			a.ongoing.InsertBefore(au, z)
+
+	for e := a.ongoing.Back(); e != nil; e = e.Prev() {
+		if e.Value.(*auction.Auction).EndTime() <= au.EndTime() {
+			a.ongoing.InsertAfter(au, e)
 			return nil
 		}
-		z = z.Next()
 	}
-	a.ongoing.PushBack(au)
+
+	a.ongoing.PushFront(au)
 	return nil
 }
 
