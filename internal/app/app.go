@@ -19,11 +19,11 @@ func Start(r io.Reader) ([]string, error) {
 		}
 
 		switch action.Type {
-		case ACTION_SELL:
+		case ActionSell:
 			if au, err := newAuction(action); err == nil {
 				_ = svc.AddAuction(au)
 			}
-		case ACTION_BID:
+		case ActionBid:
 			if bid, err := newBid(action); err == nil {
 				_ = svc.Bid(bid)
 			}

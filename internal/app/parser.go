@@ -15,10 +15,10 @@ var (
 type ActionType int
 
 const (
-	ACTION_UNKNOWN ActionType = iota
-	ACTION_HEARTBEAT
-	ACTION_SELL
-	ACTION_BID
+	ActionUnknown ActionType = iota
+	ActionHeartbeat
+	ActionSell
+	ActionBid
 )
 
 type Action struct {
@@ -38,7 +38,7 @@ func ParseLine(line string) (Action, error) {
 	if len(fields) == 1 {
 		return Action{
 			Timestamp: timestamp,
-			Type:      ACTION_HEARTBEAT,
+			Type:      ActionHeartbeat,
 		}, nil
 	}
 
@@ -50,13 +50,13 @@ func ParseLine(line string) (Action, error) {
 	case "SELL":
 		return Action{
 			Timestamp: timestamp,
-			Type:      ACTION_SELL,
+			Type:      ActionSell,
 			Data:      fields,
 		}, nil
 	case "BID":
 		return Action{
 			Timestamp: timestamp,
-			Type:      ACTION_BID,
+			Type:      ActionBid,
 			Data:      fields,
 		}, nil
 	}

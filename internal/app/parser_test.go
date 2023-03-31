@@ -22,7 +22,7 @@ func TestParseLine(t *testing.T) {
 			},
 			want: Action{
 				Timestamp: 10,
-				Type:      ACTION_HEARTBEAT,
+				Type:      ActionHeartbeat,
 			},
 		},
 		{
@@ -32,7 +32,7 @@ func TestParseLine(t *testing.T) {
 			},
 			want: Action{
 				Timestamp: 10,
-				Type:      ACTION_SELL,
+				Type:      ActionSell,
 				Data:      []string{"10", "1", "SELL", "toaster_1", "10.00", "20"},
 			},
 		},
